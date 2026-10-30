@@ -5,14 +5,14 @@ Konverter multi-format dengan proses lokal di browser untuk format ringan serta 
 ## Dukungan format
 
 - **Gambar:** JPG/JPEG, PNG, WebP, GIF, BMP, TIFF, HEIC/HEIF, AVIF, SVG; output JPG, PNG, WebP, AVIF, TIFF, GIF, atau PDF. HEIC/HEIF didekode dengan converter khusus sebelum diproses.
-- **Dokumen/presentasi:** DOC/DOCX, ODT, RTF, TXT, HTML, MD, PPT/PPTX, dan PDF; output utama PDF, DOCX, ODT, RTF, TXT, HTML. Dokumen dan presentasi juga dapat dirender menjadi JPG, PNG, WebP, AVIF, TIFF, atau GIF dari halaman/slide pertama. PDF dapat dikonversi ke DOCX/TXT atau ZIP berisi PNG per halaman. Presentasi bisa diekspor sebagai PDF atau ZIP berisi PNG per slide; ekspor ZIP dibatasi 100 halaman/slide.
+- **Dokumen/presentasi:** DOC/DOCX, ODT, RTF, TXT, HTML, MD, PPT/PPTX, dan PDF; output utama PDF, DOCX, ODT, RTF, TXT, HTML. Dokumen dan presentasi juga dapat dirender menjadi JPG, PNG, WebP, AVIF, TIFF, atau GIF dari halaman/slide pertama. PDF multi-halaman dapat dirender ke format gambar pilihan dengan satu gambar per halaman dalam ZIP (hingga 100 halaman); PDF juga dapat dikonversi ke DOCX dengan ukuran halaman dan tampilan dipertahankan sebagai gambar, ke TXT, atau ke ZIP berisi PNG per halaman. Presentasi bisa diekspor sebagai PDF atau ZIP berisi PNG per slide; ekspor ZIP dibatasi 100 halaman/slide.
 - **Spreadsheet/data:** XLS/XLSX, CSV, TSV, JSON, YAML, XML; saling konversi ke format data umum, PDF, atau gambar halaman pertama (JPG, PNG, WebP, AVIF, TIFF, GIF).
 - **Audio:** MP3, WAV, AAC, OGG, FLAC, M4A; konversi antar format melalui FFmpeg.
 - **Video:** MP4, WebM, MOV, AVI, MKV; output MP4, WebM, GIF, MP3, atau gambar frame pertama (JPG, PNG, WebP, AVIF, TIFF). GIF → MP4/WebM. GIF berdurasi panjang dipotong pada 30 detik.
 - **PDF:** kompres file, gabungkan beberapa PDF, pecah dokumen menjadi file per halaman, dan ubah semua halaman menjadi ZIP gambar. Kompresi memakai Ghostscript bila tersedia; tanpa Ghostscript, PDF ditulis ulang dengan kompresi object stream dari pdf-lib. Hasil kompresi tidak selalu lebih kecil dan dapat menghapus elemen interaktif.
 - **Arsip:** ekstrak ZIP dari browser dengan batas 200 file dan 500 MB ukuran hasil. Semua hasil batch dapat diunduh sebagai ZIP.
 
-Konversi bergantung pada kemampuan format sumber dan target. Spreadsheet diproses dari sheet pertama; format, formula, macro, font, animasi, metadata, layout Office, serta codec dapat berubah atau hilang. PDF ke DOCX, misalnya, tidak selalu mempertahankan layout sempurna. Website ini mendukung format umum di atas, bukan setiap format file yang pernah dibuat.
+Konversi bergantung pada kemampuan format sumber dan target. Spreadsheet diproses dari sheet pertama; format, formula, macro, font, animasi, metadata, layout Office, serta codec dapat berubah atau hilang. Halaman PDF di DOCX dipertahankan sebagai gambar, sehingga teksnya tidak dapat diedit sebagai teks Word. Website ini mendukung format umum di atas, bukan setiap format file yang pernah dibuat.
 
 ## Menjalankan semua fitur dengan Docker
 
