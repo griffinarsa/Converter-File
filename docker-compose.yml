@@ -5,17 +5,18 @@ services:
       target: api
     environment:
       PORT: 3001
-      MAX_FILE_MB: 50
+      MAX_FILE_MB: 1024
     init: true
     read_only: true
-    tmpfs:
-      - /tmp:rw,noexec,nosuid,size=768m
+    volumes:
+      - api-tmp:/tmp
     cap_drop:
       - ALL
     security_opt:
       - no-new-privileges:true
     pids_limit: 128
-    mem_limit: 2g
+    mem_limit: 4g
+    cpus: 2.0
     restart: unless-stopped
   web:
     build:
@@ -26,3 +27,5 @@ services:
     depends_on:
       - api
     restart: unless-stopped
+volumes:
+  api-tmp:

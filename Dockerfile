@@ -10,7 +10,7 @@ WORKDIR /app
 COPY server/package*.json ./
 RUN npm install --omit=dev
 COPY server/*.js ./
-ENV PORT=3001 MAX_FILE_MB=50
+ENV PORT=3001 MAX_FILE_MB=1024
 RUN useradd --system --uid 10001 --create-home converter && chown -R converter:converter /app /home/converter
 ENV HOME=/tmp
 USER converter

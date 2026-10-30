@@ -20,7 +20,7 @@ Konversi bergantung pada kemampuan format sumber dan target. Spreadsheet diprose
 2. Dari folder proyek jalankan `docker compose up --build`.
 3. Buka `http://localhost:8080`.
 
-Compose menjalankan frontend dan API dalam satu setup. API menyertakan LibreOffice, FFmpeg, Ghostscript, Poppler, Sharp, dan decoder HEIC khusus. Batas API default 50 MB/file; frontend mendukung sampai 100 MB untuk konversi browser. Rate limit API default 20 request per menit per IP.
+Compose menjalankan frontend dan API dalam satu setup. API menyertakan LibreOffice, FFmpeg, Ghostscript, Poppler, Sharp, dan decoder HEIC khusus. Batas unggah default 1 GB per file dan 1 GB total per batch; API menerima file sampai 1 GB dan memproses maksimal satu konversi server pada satu waktu. Konversi file sangat besar tetap bergantung pada RAM, ruang disk sementara, waktu proses, dan batas reverse proxy/hosting di depan aplikasi. Rate limit API default 20 request per menit per IP.
 
 ## Menjalankan untuk pengembangan
 
@@ -32,9 +32,9 @@ Untuk seluruh konversi server, API harus aktif. Office memakai LibreOffice atau 
 
 ## Batas dan konfigurasi
 
-- Branding dan batas sisi browser: `src/config.ts`.
-- Batas API: variabel `MAX_FILE_MB`; port API: `PORT`.
-- Saat development, salin `.env.example` menjadi `.env`. Jika LibreOffice atau Ghostscript tidak ada di `PATH`, isi `LIBREOFFICE_BIN` atau `GHOSTSCRIPT_BIN` dengan path executable.
+- Branding dan batas sisi browser: `src/config.ts` serta `VITE_MAX_FILE_MB`, `VITE_MAX_BATCH_MB`, dan `VITE_MAX_SERVER_FILE_MB`.
+- Batas API: variabel `MAX_FILE_MB`; port API: `PORT`. Batas default browser dan API adalah 1 GB per file.
+- Saat development, salin `.env.example` menjadi `.env`. Jika LibreOffice atau Ghostscript tidak ada di `PATH`, isi `LIBREOFFICE_BIN` atau `GHOSTSCRIPT_BIN` dengan path executable. Jika Poppler tidak ada di `PATH`, isi `POPPLER_BIN` dengan folder yang berisi `pdfinfo` dan `pdftoppm`.
 - Rate limit di `server/index.js`.
 - API tidak menyimpan file permanen dan tidak mencatat isi file. Error dicatat sebagai pesan terbatas.
 - Server menghapus folder kerja di `finally`, termasuk saat konversi gagal.
@@ -46,4 +46,4 @@ Tambahkan format ke `targets()` pada `src/converters/index.ts` dan aturan routin
 
 ## Deploy
 
-Deploy Docker Compose pada VPS/container host yang mendukung Docker dan pasang HTTPS reverse proxy di depan port 8080. Frontend statis dapat dipisahkan ke Vercel/Netlify, tetapi konversi Office/media tetap membutuhkan API server yang dapat diakses dan dikonfigurasi pada proxy.
+Deploy Docker Compose pada VPS/container host yang mendukung Docker dan pasang HTTPS reverse proxy di depan port 8080. Untuk menerima file 1 GB, pastikan reverse proxy/hosting di depan Compose juga mengizinkan body minimal 1.1 GB dan timeout upload panjang. Frontend statis dapat dipisahkan ke Vercel/Netlify, tetapi konversi Office/media tetap membutuhkan API server yang dapat diakses dan dikonfigurasi pada proxy.
